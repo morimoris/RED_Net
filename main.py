@@ -7,7 +7,7 @@ import numpy as np
 import tensorflow as tf
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Tensorflow DRCN Example')
+    parser = argparse.ArgumentParser(description='Tensorflow RED_Net Example')
 
     parser.add_argument('--train_height', type = int, default = 50, help = "Train data size(height)")
     parser.add_argument('--train_width', type = int, default = 50, help = "Train data size(width)")
@@ -15,8 +15,8 @@ if __name__ == "__main__":
     parser.add_argument('--test_width', type = int, default = 640, help = "Test data size(width)")
     parser.add_argument('--train_dataset_num', type = int, default = 10000, help = "Number of train datasets to generate")
     parser.add_argument('--test_dataset_num', type = int, default = 5, help = "Number of test datasets to generate")
-    parser.add_argument('--train_cut_num', type = int, default = 10, help = "Number of train data to be generated from a single image")
-    parser.add_argument('--test_cut_num', type = int, default = 1, help = "Number of test data to be generated from a single image")
+    parser.add_argument('--train_cut_num', type = int, default = 10, help = "Number of train datasets to be generated from a single image")
+    parser.add_argument('--test_cut_num', type = int, default = 1, help = "Number of test datasets to be generated from a single image")
     parser.add_argument('--train_path', type = str, default = "../../dataset/DIV2K_train_HR", help = "The path containing the train image")
     parser.add_argument('--test_path', type = str, default = "../../dataset/DIV2K_valid_HR", help = "The path containing the test image")
     parser.add_argument('--conv_deconv_num', type = int, default = 10, help="Number of convolution and deconvolution nets")

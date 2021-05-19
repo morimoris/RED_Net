@@ -5,8 +5,8 @@ class RED_Net():
     def __init__(self, conv_num):
         #parameter set
         self.conv_num = conv_num
-        self.deconv_num = conv_num
-        self.input_channels = 1
+        self.deconv_num = conv_num    #Number of convolution layers == number of deconvolutions layers
+        self.input_channels = 1       #input gray scale images
         self.filter_num = 64
         self.kernel_size = (3, 3)
 
@@ -41,6 +41,7 @@ class RED_Net():
                 conv = deconv_skip
 
         conv = Conv2DTranspose(filters = self.input_channels, kernel_size = self.kernel_size, padding = "same", activation = "relu")(conv)
+        #add skip connections
         deconv_skip = Add()([conv, self.skip_connection_list[0]])
   
         model = Model(inputs = input_shape, outputs = deconv_skip)
@@ -73,6 +74,7 @@ class RED_Net():
                 conv = deconv_skip
 
         conv = Conv2DTranspose(filters = self.input_channels, kernel_size = self.kernel_size, padding = "same", activation = "relu")(conv)
+        #add skip connections
         deconv_skip = Add()([conv, self.skip_connection_list[0]])
 
         model = Model(inputs = input_shape, outputs = deconv_skip)
