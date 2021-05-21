@@ -1,5 +1,5 @@
 from tensorflow.python.keras.models import Model
-from tensorflow.python.keras.layers import Conv2D, Conv2DTranspose, Input, Add
+from tensorflow.python.keras.layers import Conv2D, Conv2DTranspose, Input, Add, ReLU
 
 class RED_Net():
     def __init__(self, conv_num):
@@ -26,25 +26,26 @@ class RED_Net():
         #convolution part
         conv = input_shape
         for i in range(self.conv_num):
-            conv = Conv2D(filters = self.filter_num, kernel_size = self.kernel_size, padding = "same", activation = "relu")(conv)
+            conv = Conv2D(filters = self.filter_num, kernel_size = self.kernel_size, padding = "same")(conv)
 
             if i % 2 == 1:
                 self.skip_connection_list[(i // 2 + 1)] = conv
 
         #deconvolution part
         for i in range(self.deconv_num - 1):
-            conv = Conv2DTranspose(filters = self.filter_num, kernel_size = self.kernel_size, padding = "same", activation = "relu")(conv)
+            conv = Conv2DTranspose(filters = self.filter_num, kernel_size = self.kernel_size, padding = "same")(conv)
             
             #add skip connections
             if i % 2 == 0:
                 deconv_skip = Add()([conv, self.skip_connection_list[-1 * (i // 2 + 1)]])
-                conv = deconv_skip
+                conv = ReLU()(deconv_skip)
 
-        conv = Conv2DTranspose(filters = self.input_channels, kernel_size = self.kernel_size, padding = "same", activation = "relu")(conv)
+        conv = Conv2DTranspose(filters = self.input_channels, kernel_size = self.kernel_size, padding = "same")(conv)
         #add skip connections
         deconv_skip = Add()([conv, self.skip_connection_list[0]])
-  
-        model = Model(inputs = input_shape, outputs = deconv_skip)
+        Output = ReLU()(deconv_skip)
+
+        model = Model(inputs = input_shape, outputs = Output)
         model.summary()
 
         return model
@@ -59,25 +60,25 @@ class RED_Net():
         #convolution part   
         conv = input_shape
         for i in range(self.conv_num):
-            conv = Conv2D(filters = self.filter_num, kernel_size = self.kernel_size, padding = "same", activation = "relu")(conv)
+            conv = Conv2D(filters = self.filter_num, kernel_size = self.kernel_size, padding = "same")(conv)
 
             if i % 2 == 1 and i != self.conv_num - 1:
                 self.skip_connection_list[(i // 2 + 1)] = conv
 
         #deconvolution part
         for i in range(self.deconv_num - 1):
-            conv = Conv2DTranspose(filters = self.filter_num, kernel_size = self.kernel_size, padding = "same", activation = "relu")(conv)
+            conv = Conv2DTranspose(filters = self.filter_num, kernel_size = self.kernel_size, padding = "same")(conv)
             
             #add skip connections
             if i % 2 == 1:
                 deconv_skip = Add()([conv, self.skip_connection_list[-1 * (i // 2 + 1)]])
-                conv = deconv_skip
+                conv = ReLU()(deconv_skip)
 
-        conv = Conv2DTranspose(filters = self.input_channels, kernel_size = self.kernel_size, padding = "same", activation = "relu")(conv)
+        conv = Conv2DTranspose(filters = self.input_channels, kernel_size = self.kernel_size, padding = "same")(conv)
         #add skip connections
         deconv_skip = Add()([conv, self.skip_connection_list[0]])
+        Output = ReLU()(deconv_skip)
 
-        model = Model(inputs = input_shape, outputs = deconv_skip)
+        model = Model(inputs = input_shape, outputs = Output)
         model.summary()
-
         return model

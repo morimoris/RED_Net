@@ -11,8 +11,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--train_height', type = int, default = 50, help = "Train data size(height)")
     parser.add_argument('--train_width', type = int, default = 50, help = "Train data size(width)")
-    parser.add_argument('--test_height', type = int, default = 360, help = "Test data size(height)")
-    parser.add_argument('--test_width', type = int, default = 640, help = "Test data size(width)")
+    parser.add_argument('--test_height', type = int, default = 720, help = "Test data size(height)")
+    parser.add_argument('--test_width', type = int, default = 1280, help = "Test data size(width)")
     parser.add_argument('--train_dataset_num', type = int, default = 10000, help = "Number of train datasets to generate")
     parser.add_argument('--test_dataset_num', type = int, default = 5, help = "Number of test datasets to generate")
     parser.add_argument('--train_cut_num', type = int, default = 10, help = "Number of train datasets to be generated from a single image")
