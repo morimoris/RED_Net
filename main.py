@@ -31,17 +31,17 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if args.mode == 'train_datacreate': #学習用データセットの生成
+    if args.mode == 'train_datacreate': #train dataset create
         datacreate = data_create.datacreate()
-        train_x, train_y = datacreate.datacreate(args.train_path,       #切り取る動画のpath
-                                            args.train_dataset_num,     #データセットの生成数
-                                            args.train_cut_num,         #1枚の画像から生成するデータの数
-                                            args.train_height,          #保存サイズ
+        train_x, train_y = datacreate.datacreate(args.train_path,       #Path where training data is stored
+                                            args.train_dataset_num,     #Number of train datasets
+                                            args.train_cut_num,         #Number of data to be generated from a single image
+                                            args.train_height,          #Save size
                                             args.train_width)   
         path = "train_data_list"
         np.savez(path, train_x, train_y)
 
-    elif args.mode == 'test_datacreate': #評価用データセットの生成
+    elif args.mode == 'test_datacreate': #test dataset create
         datacreate = data_create.datacreate()
         test_x, test_y = datacreate.datacreate(args.test_path,
                                             args.test_dataset_num,
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         path = "test_data_list"
         np.savez(path, test_x, test_y)
 
-    elif args.mode == "train_model": #学習
+    elif args.mode == "train_model": #train
         physical_devices = tf.config.list_physical_devices('GPU')
         if len(physical_devices) > 0:
             for device in physical_devices:
@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
         train_model.save("Red_net_model.h5")
 
-    elif args.mode == "evaluate": #評価
+    elif args.mode == "evaluate": #evaluate
         physical_devices = tf.config.list_physical_devices('GPU')
         if len(physical_devices) > 0:
             for device in physical_devices:
