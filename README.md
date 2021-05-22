@@ -2,7 +2,7 @@
 
 https://qiita.com/morimoris/items/c494eeb19d823d847783
 
-## Run environment
+## Experiment environment
 
 - PC environment
   - `CPU` : AMD Ryzen 5 3500 6-Core Processor
